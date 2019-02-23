@@ -3,10 +3,13 @@ from bs4 import BeautifulSoup as bs
 import time
 import pandas as pd
 
-executable_path = {"executable_path": "chromedriver.exe"}
-browser = Browser("chrome", **executable_path, headless=False)
+def init_browser():
+    executable_path = {"executable_path": "chromedriver.exe"}
+    return Browser("chrome", **executable_path, headless=False)
+
 
 def scrape():
+    browser = init_browser()
     # # MARS NEWS
     # Visit NASA Web site
     url = 'https://mars.nasa.gov/news/'
@@ -64,7 +67,7 @@ def scrape():
             res.append(row)
 
     mars_df = pd.DataFrame(res)
-    mars_df = mars_df.to_html(index=False, header=False, border=0)##.replace('\n', '')   , col_space=50
+    mars_df=mars_df.to_html(index=False, col_space=100, header=False, border=1)##.replace('\n', '')   , col_space=50
     mars_df = mars_df.replace('\n', '')
     
 
